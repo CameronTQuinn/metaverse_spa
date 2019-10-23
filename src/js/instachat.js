@@ -10,10 +10,16 @@ template.innerHTML = `
     </i>
   </h3>
   <div class="messages" id="messages">
-    <p class="text" id='text'></p>
-    <p class="author" id='author'></p>
+        <template>
+            <p class="text" id='text'></p>
+            <p class="author" id='author'></p>
+        </template>
   </div>
-  <textarea class="messagearea" id="messagearea"></textarea>
+  <br>
+  <div class ="sendmessagearea" id="sendmessagearea">
+    <p class="user" id = "user"></p>
+    <textarea class="messagearea" id="messagearea"></textarea>
+  </div>
 </div>
 `
 class InstaChat extends window.HTMLElement {
@@ -35,11 +41,11 @@ class InstaChat extends window.HTMLElement {
     const submitUsername = document.createElement('button')
     submitUsername.innerHTML = 'Submit'
     submitUsername.addEventListener('click', () => {
-      const author = this.shadowRoot.getElementById('author')
+      const user = this.shadowRoot.getElementById('user')
       username = userNameInput.value.trim()
       // If the username received is valid, let them send a message
       if (username !== '') {
-        author.innerHTML = `User: ${username}`
+        user.innerHTML = `User: ${username}`
         userNameLabel.remove()
         userNameInput.remove()
         submitUsername.remove()
@@ -48,7 +54,10 @@ class InstaChat extends window.HTMLElement {
         sendButton.addEventListener('click', (event) => {
           // Send the message
           const modify = this.shadowRoot.getElementById('messagearea')
-          this.sendMessage(modify.value, username)
+          const value = modify.value
+          this.connectToChat().then(function (socket) {
+            this.sendMessage(value, username)
+          }.bind(this))
           // Empty the text area
           modify.value = ''
           event.preventDefault()
@@ -81,14 +90,42 @@ class InstaChat extends window.HTMLElement {
     const data = {
       type: 'message',
       data: text,
-      username: username
+      username: username,
+      channel: 'my, not so secret, channel',
+      key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
     }
+    this.connectToChat().then(function (socket) {
+      socket.send(JSON.stringify(data))
+    })
     console.log(text)
     console.log(username)
   }
 
   connectToChat () {
-    this.socket = new WebSocket('ws://vhost3.lnu.se:20080/socket/')
+    return new Promise(function (resolve, reject) {
+      if (this.socket && this.socket.readystae === 1) {
+        resolve(this.socket)
+        return
+      }
+      this.socket = new WebSocket('ws://vhost3.lnu.se:20080/socket/')
+      this.socket.addEventListener('open', () => {
+        resolve(this.socket)
+      })
+      this.socket.addEventListener('message', (event) => {
+        const message = JSON.parse(event.data)
+        this.printMessage(message)
+      })
+    }.bind(this))
+  }
+
+  printMessage (message) {
+    const template = this.parentDiv.querySelectorAll('template')[0]
+    const messageDiv = document.importNode(template.content, true)
+    const text = messageDiv.getElementById('text')
+    text.textContent = message.data
+    const author = messageDiv.getElementById('author')
+    author.textContent = message.data
+    this.shadowRoot.getElementById('messages').appendChild(messageDiv)
   }
 }
 window.customElements.define('insta-chat', InstaChat)
