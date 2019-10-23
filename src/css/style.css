@@ -1,0 +1,18 @@
+body {
+    background-image: url('https://ak1.picdn.net/shutterstock/videos/26827741/thumb/1.jpg');
+    background-color: black; 
+    color: white; 
+}
+
+h1 {
+    color: aqua;
+    text-align: center; 
+}
+button {
+    background-color: blueviolet;
+    color: dodgerblue;
+    padding: 10px 10px; 
+    text-align: center;
+    border-radius: 12px;
+    font-size: 16px; 
+}

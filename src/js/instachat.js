@@ -1,5 +1,40 @@
 const template = document.createElement('template')
 template.innerHTML = `
+<style>
+.insta-chat {
+    padding: 2px; 
+    resize: both; 
+    overflow: auto; 
+    border-style: solid; 
+    border-color: blue; 
+    color: white; 
+    background-color: black; 
+    text-align: left;  
+  }
+
+  .fixed-ratio-resize { /* basic responsive img */
+    max-width: 10%;
+    height: auto;
+    width: auto\9; /* IE8 */
+  }
+
+  label {
+      color: blue; 
+      font-size: 25px; 
+  }
+  input {
+      background-color: black; 
+      color: white; 
+  }
+  button {
+      background-color: fuchsia; 
+      color: blue; 
+  }
+  textarea {
+      background-color: black;
+      color: white;
+  }
+</style>
 <div class="insta-chat" id="insta-chat">
   <h1 style="color:purple">
     InstaChat 
@@ -38,6 +73,11 @@ class InstaChat extends window.HTMLElement {
     const userNameLabel = document.createElement('label')
     userNameLabel.innerHTML = 'Enter a username...'
     const userNameInput = document.createElement('input')
+    if (localStorage.getItem('username') !== null) {
+      username = localStorage.getItem('username')
+      console.log(username)
+      userNameInput.value = username
+    }
     const submitUsername = document.createElement('button')
     submitUsername.innerHTML = 'Submit'
     submitUsername.addEventListener('click', () => {
@@ -45,6 +85,8 @@ class InstaChat extends window.HTMLElement {
       username = userNameInput.value.trim()
       // If the username received is valid, let them send a message
       if (username !== '') {
+        // Store username in localStorage
+        localStorage.setItem('username', `${username}`)
         user.innerHTML = `User: ${username}`
         userNameLabel.remove()
         userNameInput.remove()
