@@ -30,11 +30,11 @@ function main () {
 function createWindow (typeVal) {
   let type
   if (typeVal === 1) {
-    type = 'instChat'
+    type = 'insta-chat'
   } else if (typeVal === 2) {
-    type = 'memoryGame'
+    type = 'memory-game'
   } else if (typeVal === 3) {
-    type = 'clickGame'
+    type = 'click-game'
   }
   const div = document.createElement('div')
   let i = 0
@@ -62,9 +62,6 @@ function createWindow (typeVal) {
   </style>
   <div id="mydiv${i}">
     <div id="mydivheader${i}">Click here to move</div>
-    <p>Move</p>
-    <p>this</p>
-    <p>DIV</p>
   </div>
   `
   div.addEventListener('mousedown', function (event) {
@@ -72,6 +69,8 @@ function createWindow (typeVal) {
   })
   const appendAt = document.getElementById('windowarea')
   appendAt.appendChild(div)
+  const element = document.createElement(type)
+  document.getElementById(`mydiv${i}`).appendChild(element)
 }
 
 // Make the DIV element draggagle:
@@ -86,25 +85,25 @@ function dragElement (element) {
     element.onmousedown = dragMouseDown
   }
 
-  function dragMouseDown (e) {
-    e = e || window.event
-    e.preventDefault()
+  function dragMouseDown (event) {
+    event = event || window.event
+    event.preventDefault()
     // get the mouse cursor position at startup:
-    pos3 = e.clientX
-    pos4 = e.clientY
+    pos3 = event.clientX
+    pos4 = event.clientY
     document.onmouseup = closeDragElement
     // call a function whenever the cursor moves:
     document.onmousemove = elementDrag
   }
 
-  function elementDrag (e) {
-    e = e || window.event
-    e.preventDefault()
+  function elementDrag (event) {
+    event = event || window.event
+    event.preventDefault()
     // calculate the new cursor position:
-    pos1 = pos3 - e.clientX
-    pos2 = pos4 - e.clientY
-    pos3 = e.clientX
-    pos4 = e.clientY
+    pos1 = pos3 - event.clientX
+    pos2 = pos4 - event.clientY
+    pos3 = event.clientX
+    pos4 = event.clientY
     // set the element's new position:
     element.style.top = (element.offsetTop - pos2) + 'px'
     element.style.left = (element.offsetLeft - pos1) + 'px'
