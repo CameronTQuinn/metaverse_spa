@@ -28,10 +28,23 @@ function main () {
 }
 
 function createWindow (typeVal) {
-  const template = document.createElement('template')
-  template.innerHTML = `
+  let type
+  if (typeVal === 1) {
+    type = 'instChat'
+  } else if (typeVal === 2) {
+    type = 'memoryGame'
+  } else if (typeVal === 3) {
+    type = 'clickGame'
+  }
+  const div = document.createElement('div')
+  let i = 0
+  while (document.getElementById(`window${i}`)) {
+    i++
+  }
+  div.setAttribute('id', `window${i}`)
+  div.innerHTML = `
   <style>
-  #mydiv {
+  #mydiv${i} {
     position: absolute;
     z-index: 9;
     background-color: #f1f1f1;
@@ -39,7 +52,7 @@ function createWindow (typeVal) {
     border: 1px solid #d3d3d3;
   }
 
-  #mydivheader {
+  #mydivheader${i} {
     padding: 10px;
     cursor: move;
     z-index: 10;
@@ -47,76 +60,60 @@ function createWindow (typeVal) {
     color: #fff;
   }
   </style>
-
-  <h1>Draggable DIV Element</h1>
-
-  <p>Click and hold the mouse button down while moving the DIV element</p>
-
-  <div id="mydiv">
-    <div id="mydivheader">Click here to move</div>
+  <div id="mydiv${i}">
+    <div id="mydivheader${i}">Click here to move</div>
     <p>Move</p>
     <p>this</p>
     <p>DIV</p>
   </div>
-
-  <script>
-  //Make the DIV element draggagle:
-  dragElement(document.getElementById("mydiv"));
-
-  function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    if (document.getElementById(elmnt.id + "header")) {
-      /* if present, the header is where you move the DIV from:*/
-      document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-    } else {
-      /* otherwise, move the DIV from anywhere inside the DIV:*/
-      elmnt.onmousedown = dragMouseDown;
-    }
-
-    function dragMouseDown(e) {
-      e = e || window.event;
-      e.preventDefault();
-      // get the mouse cursor position at startup:
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      document.onmouseup = closeDragElement;
-      // call a function whenever the cursor moves:
-      document.onmousemove = elementDrag;
-    }
-
-    function elementDrag(e) {
-      e = e || window.event;
-      e.preventDefault();
-      // calculate the new cursor position:
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-      // set the element's new position:
-      elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-      elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-    }
-
-    function closeDragElement() {
-      /* stop moving when mouse button is released:*/
-      document.onmouseup = null;
-      document.onmousemove = null;
-    }
-  }
-  </script>
   `
+  div.addEventListener('mousedown', function (event) {
+    dragElement(document.getElementById(`mydiv${i}`))
+  })
   const appendAt = document.getElementById('windowarea')
-  appendAt.appendChild(template.content.cloneNode(true))
-  /*
-  let type
-  if (typeVal === 1) {
-    // instChat
-  } else if (typeVal === 2) {
-    // memoryGame
-  } else if (typeVal === 3) {
-    // clickGame
-  }
-  */
+  appendAt.appendChild(div)
 }
 
+// Make the DIV element draggagle:
+
+function dragElement (element) {
+  var pos1 = 0; var pos2 = 0; var pos3 = 0; var pos4 = 0
+  if (document.getElementById(element.id + 'header')) {
+    /* if present, the header is where you move the DIV from: */
+    document.getElementById(element.id + 'header').onmousedown = dragMouseDown
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV: */
+    element.onmousedown = dragMouseDown
+  }
+
+  function dragMouseDown (e) {
+    e = e || window.event
+    e.preventDefault()
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX
+    pos4 = e.clientY
+    document.onmouseup = closeDragElement
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag
+  }
+
+  function elementDrag (e) {
+    e = e || window.event
+    e.preventDefault()
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX
+    pos2 = pos4 - e.clientY
+    pos3 = e.clientX
+    pos4 = e.clientY
+    // set the element's new position:
+    element.style.top = (element.offsetTop - pos2) + 'px'
+    element.style.left = (element.offsetLeft - pos1) + 'px'
+  }
+
+  function closeDragElement () {
+    /* stop moving when mouse button is released: */
+    document.onmouseup = null
+    document.onmousemove = null
+  }
+}
 export { main }
