@@ -1,17 +1,25 @@
-body {
-    background-image: url('https://i.pinimg.com/originals/89/2f/a4/892fa41535cd98ac43e7219f26c03e31.gif');
-    background-color: black; 
+html { 
+    background: url('https://wallpapercave.com/wp/wp2471615.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-color: black;
     color: white; 
 }
 
 h1 {
     color: aqua;
     text-align: center; 
-    font: 
 }
 
 .menu {
     text-align: center; 
+}
+
+.windowarea {
+    width: 500; 
+    height: 500; 
 }
 
 button {
