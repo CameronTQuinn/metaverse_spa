@@ -39,21 +39,20 @@ function createWindow (typeVal) {
 
   #mydivheader${i} {
     padding: 10px;
-    cursor: move; 
+    /* cursor: move; */
     z-index: 10;
     background-color: #2196F3;
     color: #fff;
   }
   </style>
-  <div class="mydiv" id="mydiv${i}">
-    <div class="mydivheader" id="mydivheader${i}">
+  <div id="mydiv${i}">
+    <div id="mydivheader${i}">
       <button type="button" class="closebutton" id="closebutton${i}">X</button>
     </div>
   </div>
   `
   div.addEventListener('mousedown', function (event) {
-    const element = document.getElementById(`mydivheader${i}`)
-    if (event.target === element) {
+    if (event.target === document.getElementById(`mydivheader${i}`)) {
       dragElement(document.getElementById(`mydiv${i}`), event)
     }
   })
@@ -97,7 +96,6 @@ function createWindow (typeVal) {
 }
 
 // Make the DIV element draggagle:
-
 function dragElement (element, event) {
   var pos1 = 0; var pos2 = 0; var pos3 = 0; var pos4 = 0
   element.onmousedown = dragMouseDown(event)
@@ -131,4 +129,5 @@ function dragElement (element, event) {
     document.onmousemove = null
   }
 }
+
 export { main }

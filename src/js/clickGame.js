@@ -9,6 +9,7 @@ template.innerHTML = `
   padding: 2px; 
   height: 100%; 
   width: 100%; 
+  resize: both; 
   border-style: solid; 
   border-color: blue; 
   text-align: left;  

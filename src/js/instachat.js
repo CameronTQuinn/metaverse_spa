@@ -5,6 +5,8 @@ template.innerHTML = `
     padding: 2px; 
     height: 100%; 
     width: 100%; 
+    resize: both; 
+    overflow: scroll;
     border-style: solid; 
     border-color: blue; 
     color: white; 
