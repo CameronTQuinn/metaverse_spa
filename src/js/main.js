@@ -28,14 +28,6 @@ function main () {
 }
 
 function createWindow (typeVal) {
-  let type
-  if (typeVal === 1) {
-    type = 'insta-chat'
-  } else if (typeVal === 2) {
-    type = 'memory-game'
-  } else if (typeVal === 3) {
-    type = 'click-game'
-  }
   const div = document.createElement('div')
   let i = 0
   while (document.getElementById(`window${i}`)) {
@@ -61,16 +53,58 @@ function createWindow (typeVal) {
   }
   </style>
   <div id="mydiv${i}">
-    <div id="mydivheader${i}">Click here to move</div>
+    <div id="mydivheader${i}">
+      <button type="button" class="closebutton" id="closebutton${i}">X</button>
+    </div>
   </div>
   `
   div.addEventListener('mousedown', function (event) {
     dragElement(document.getElementById(`mydiv${i}`))
   })
-  const appendAt = document.getElementById('windowarea')
-  appendAt.appendChild(div)
-  const element = document.createElement(type)
-  document.getElementById(`mydiv${i}`).appendChild(element)
+  const appendTo = document.getElementById('windowarea')
+  appendTo.appendChild(div)
+  // Event listener for close button for each new "mini-window"
+  const closeButton = document.getElementById(`closebutton${i}`)
+  closeButton.addEventListener('click', () => {
+    div.remove()
+  })
+  const appendAt = document.getElementById(`mydiv${i}`)
+  let type
+  if (typeVal === 1) {
+    type = 'insta-chat'
+    const instaChat = document.createElement(`${type}`)
+    instaChat.setAttribute('id', `window${i}${type}`)
+    instaChat.addEventListener('click', (event) => {
+      console.log('Here')
+      console.log('Event')
+      console.log('Event' + event)
+      console.log('Target' + event.target.id)
+      const tar = document.getElementById(event.target.id)
+      console.log(tar)
+      event.target.focus()
+    })
+    appendAt.appendChild(instaChat)
+    instaChat.initializeChat()
+  } else if (typeVal === 2) {
+    type = 'memory-game'
+    const memoryGame = document.createElement(`${type}`)
+    memoryGame.setAttribute('id', `window${i}${type}`)
+    memoryGame.addEventListener('click', (event) => {
+      console.log('Here')
+      event.target.focus()
+    })
+    appendAt.appendChild(memoryGame)
+    memoryGame.createBoard(2, 2)
+  } else if (typeVal === 3) {
+    type = 'click-game'
+    const clickGame = document.createElement(`${type}`)
+    clickGame.setAttribute('id', `window${i}${type}`)
+    clickGame.addEventListener('click', (event) => {
+      event.target.focus()
+    })
+    appendAt.appendChild(clickGame)
+    clickGame.createGame()
+  }
 }
 
 // Make the DIV element draggagle:

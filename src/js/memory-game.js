@@ -12,6 +12,8 @@ template.innerHTML = `
   border-style: solid; 
   border-color: blue; 
   text-align: left;  
+  background-color: black; 
+  color: white; 
 }
 
 .fixed-ratio-resize { /* basic responsive img */
@@ -42,6 +44,28 @@ class MemoryGame extends window.HTMLElement {
   }
 
   createBoard (rows, cols) {
+    /*
+    const queryParams = document.createElement('label')
+    queryParams.innerHTML = 'Please enter desired dimensions (even, i.e. 2 X 2) of game'
+    const paramsFieldRows = document.createElement('input')
+    paramsFieldRows.innerHTML = 'Enter first dimension here...'
+    const paramsFieldColumns = document.createElement('input')
+    paramsFieldColumns.innerHTML = 'Enter here...'
+    const submitButton = document.createElement('button')
+    submitButton.innerHTML = 'Submit'
+    submitButton.addEventListener('click', (event) => {
+      if ((paramsFieldRows.value % 2 === 0) && (paramsFieldColumns % 2 === 0)) {
+        rows = paramsFieldRows.value
+        cols = paramsFieldColumns.value
+      } else {
+        rows = 2
+        cols = 2
+      }
+    })
+    this.appendAt.appendChild(queryParams).appendChild(paramsFieldRows)
+    this.appendAt.appendChild(paramsFieldColumns)
+    this.appendAt.appendChild(submitButton)
+    */
     this.rows = rows
     this.cols = cols
     let board = []

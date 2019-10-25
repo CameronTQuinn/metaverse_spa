@@ -214,6 +214,7 @@ class ClickGame extends window.HTMLElement {
       if (time === 0) {
         this.restartGame(false)
         clearInterval(timer)
+        timeDisplay.remove()
         time = 20
       } else {
         time--
