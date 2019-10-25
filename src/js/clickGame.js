@@ -7,8 +7,8 @@ template.innerHTML = `
 }
 .click-game {
   padding: 2px; 
-  resize: both; 
-  overflow: auto; 
+  height: 100%; 
+  width: 100%; 
   border-style: solid; 
   border-color: blue; 
   text-align: left;  

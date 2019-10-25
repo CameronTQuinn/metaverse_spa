@@ -3,8 +3,8 @@ template.innerHTML = `
 <style>
 .insta-chat {
     padding: 2px; 
-    resize: both; 
-    overflow: auto; 
+    height: 100%; 
+    width: 100%; 
     border-style: solid; 
     border-color: blue; 
     color: white; 
@@ -63,6 +63,10 @@ class InstaChat extends window.HTMLElement {
     this.attachShadow({ mode: 'open' })
     this.shadowRoot.appendChild(template.content.cloneNode(true))
     this.parentDiv = this.shadowRoot.getElementById('insta-chat')
+    this.parentDiv.addEventListener('click', (event) => {
+      event.target.focus()
+    })
+    this.appendAt = this.shadowRoot.getElementById('messages')
     this.breakline = document.createElement('br')
     this.socket = null
   }
@@ -75,7 +79,6 @@ class InstaChat extends window.HTMLElement {
     const userNameInput = document.createElement('input')
     if (localStorage.getItem('username') !== null) {
       username = localStorage.getItem('username')
-      console.log(username)
       userNameInput.value = username
     }
     const submitUsername = document.createElement('button')
@@ -113,19 +116,19 @@ class InstaChat extends window.HTMLElement {
         const errorMessage = document.createElement('h2')
         errorMessage.setAttribute('style', 'color:red')
         errorMessage.innerHTML = 'Invalid username, please re-enter a valid username'
-        this.parentDiv.appendChild(errorMessage)
+        this.appendAt.appendChild(errorMessage)
         const errorMessageButton = document.createElement('button')
         errorMessageButton.innerHTML = 'Okay'
-        this.parentDiv.appendChild(errorMessageButton)
+        this.appendAt.appendChild(errorMessageButton)
         errorMessageButton.addEventListener('click', () => {
           errorMessage.remove()
           this.initializeChat()
         })
       }
     })
-    this.parentDiv.appendChild(this.breakline)
-    this.parentDiv.appendChild(userNameLabel).appendChild(userNameInput)
-    this.parentDiv.appendChild(submitUsername)
+    this.appendAt.appendChild(this.breakline)
+    this.appendAt.appendChild(userNameLabel).appendChild(userNameInput)
+    this.appendAt.appendChild(submitUsername)
   }
 
   sendMessage (text, username) {
@@ -139,8 +142,6 @@ class InstaChat extends window.HTMLElement {
     this.connectToChat().then(function (socket) {
       socket.send(JSON.stringify(data))
     })
-    console.log(text)
-    console.log(username)
   }
 
   connectToChat () {

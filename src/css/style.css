@@ -17,6 +17,11 @@ h1 {
     text-align: center; 
 }
 
+h2 {
+    color: fuchsia;
+    text-align: center; 
+}
+
 .windowarea {
     width: 500; 
     height: 500; 

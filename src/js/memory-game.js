@@ -3,12 +3,14 @@ template.innerHTML = `
 <style>
 .grid-container {
   display: grid; 
-  grid-template-columns: auto auto; 
+  grid-template-columns: auto auto auto auto; 
+  grid-column-gap: 50px; 
 }
+
 .memory-game {
+  height: 100%; 
+  width: 100%; 
   padding: 2px; 
-  resize: both; 
-  overflow: auto; 
   border-style: solid; 
   border-color: blue; 
   text-align: left;  
@@ -17,20 +19,34 @@ template.innerHTML = `
 }
 
 .fixed-ratio-resize { /* basic responsive img */
-  max-width: 10%;
+  max-width: 100%;
   height: auto;
   width: auto\9; /* IE8 */
 }
 
 img {
-  height: 10vw;
-  width: 10vw; 
+  height: 75%;
+  width: 75%; 
   float: left; 
+  top: 2px; 
+  bottom: 2px; 
+  left: 2px; 
+  right: 2px; 
   padding: 0 2%; 
 }
+
+label {
+    background-color: black; 
+    color: white; 
+} 
+button {
+    width: 50px; 
+    height: 20px; 
+    text-align: center;
+}
 </style>
-<div class="grid-container">
-  <div class="memory-game" id ='memory-game'></div>
+<div class="memory-game" id ='memory-game'>
+    <div class="grid-container" id='grid-container'></div>
 </div>
 `
 class MemoryGame extends window.HTMLElement {
@@ -38,44 +54,48 @@ class MemoryGame extends window.HTMLElement {
     super()
     this.attachShadow({ mode: 'open' })
     this.shadowRoot.appendChild(template.content.cloneNode(true))
-    this.appendAt = this.shadowRoot.querySelector('#memory-game')
+    this.parentDiv = this.shadowRoot.querySelector('#memory-game')
+    this.parentDiv.addEventListener('click', (event) => {
+      event.target.focus()
+    })
+    this.grid = this.shadowRoot.querySelector('#grid-container')
     this.rows = rows
     this.cols = cols
   }
 
   createBoard (rows, cols) {
-    /*
     const queryParams = document.createElement('label')
     queryParams.innerHTML = 'Please enter desired dimensions (even, i.e. 2 X 2) of game'
     const paramsFieldRows = document.createElement('input')
-    paramsFieldRows.innerHTML = 'Enter first dimension here...'
     const paramsFieldColumns = document.createElement('input')
-    paramsFieldColumns.innerHTML = 'Enter here...'
     const submitButton = document.createElement('button')
     submitButton.innerHTML = 'Submit'
-    submitButton.addEventListener('click', (event) => {
-      if ((paramsFieldRows.value % 2 === 0) && (paramsFieldColumns % 2 === 0)) {
+    submitButton.addEventListener('click', () => {
+      if ((paramsFieldRows.value % 2 === 0) && (paramsFieldColumns.value % 2 === 0)) {
         rows = paramsFieldRows.value
         cols = paramsFieldColumns.value
       } else {
         rows = 2
         cols = 2
       }
+      queryParams.remove()
+      paramsFieldRows.remove()
+      paramsFieldColumns.remove()
+      submitButton.remove()
+      this.rows = rows
+      this.cols = cols
+      let board = []
+      const images = [1, 2, 3, 4, 5, 6, 7, 8]
+      for (let i = 0; i < this.rows * this.cols / 2; i++) {
+        board.push(images[i])
+        board.push(images[i])
+      }
+      board = this.shuffleBoard(board)
+      this.showBoard(board)
     })
-    this.appendAt.appendChild(queryParams).appendChild(paramsFieldRows)
-    this.appendAt.appendChild(paramsFieldColumns)
-    this.appendAt.appendChild(submitButton)
-    */
-    this.rows = rows
-    this.cols = cols
-    let board = []
-    const images = [1, 2, 3, 4, 5, 6, 7, 8]
-    for (let i = 0; i < this.rows * this.cols / 2; i++) {
-      board.push(images[i])
-      board.push(images[i])
-    }
-    board = this.shuffleBoard(board)
-    this.showBoard(board)
+    this.parentDiv.appendChild(queryParams).appendChild(paramsFieldRows)
+    this.parentDiv.appendChild(paramsFieldColumns)
+    this.parentDiv.appendChild(submitButton)
   }
 
   shuffleBoard (board) {
@@ -98,7 +118,7 @@ class MemoryGame extends window.HTMLElement {
       img.setAttribute('id', `img${i}`)
       img.setAttribute('val', `image/${board[i]}.png`)
       img.setAttribute('class', 'fixed-ratio-resize')
-      this.appendAt.appendChild(aTag).appendChild(img)
+      this.grid.appendChild(aTag).appendChild(img)
     }
     this.playGame(board)
   }
@@ -143,14 +163,14 @@ class MemoryGame extends window.HTMLElement {
   }
 
   restartGame () {
-    while (this.appendAt.firstChild) {
-      this.appendAt.removeChild(this.appendAt.firstChild)
+    while (this.grid.firstChild) {
+      this.grid.removeChild(this.grid.firstChild)
     }
     const notify = document.createElement('label')
     notify.innerHTML = 'Game Completed Play Again?'
     const playAgainButton = document.createElement('button')
     playAgainButton.innerHTML = 'Yes!'
-    this.appendAt.appendChild(notify).appendChild(playAgainButton)
+    this.grid.appendChild(notify).appendChild(playAgainButton)
     playAgainButton.addEventListener('click', (event) => {
       notify.remove()
       playAgainButton.remove()
