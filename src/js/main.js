@@ -75,12 +75,14 @@ function createWindow (typeVal) {
     console.log(zVal)
     instaChat.style.zIndex = `${zVal}`
     instaChat.addEventListener('click', (event) => {
+      console.log('Focus instaChat')
       console.log(zVal)
       instaChat.style.zIndex = `${zVal}`
       console.log('instaChat z-value' + instaChat.style.zIndex)
       event.target.focus()
     })
     instaChat.addEventListener('blur', () => {
+      console.log('Blur instaChat')
       instaChat.style.zIndex = '0'
       console.log('instaChat loses focus')
     })
@@ -93,6 +95,7 @@ function createWindow (typeVal) {
     console.log(zVal)
     memoryGame.style.zIndex = `${zVal}`
     memoryGame.addEventListener('click', (event) => {
+      console.log('Focus memoryGame')
       console.log(zVal)
       zVal++
       memoryGame.style.zIndex = `${zVal}`
@@ -112,6 +115,7 @@ function createWindow (typeVal) {
     console.log(zVal)
     clickGame.style.zIndex = `${zVal}`
     clickGame.addEventListener('click', (event) => {
+      console.log('Focus clickGame')
       console.log(zVal)
       zVal++
       clickGame.style.zIndex = `${zVal}`

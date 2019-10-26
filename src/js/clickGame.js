@@ -10,6 +10,7 @@ template.innerHTML = `
   height: 100%; 
   width: 100%; 
   resize: both; 
+  overflow: scroll;
   border-style: solid; 
   border-color: blue; 
   text-align: left;  

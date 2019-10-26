@@ -29,6 +29,7 @@ template.innerHTML = `
       color: white; 
   }
   button {
+      font-family: 'marske';
       background-color: fuchsia; 
       color: blue; 
   }

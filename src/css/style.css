@@ -5,6 +5,7 @@ html {
     -o-background-size: cover;
     background-size: cover;
     background-color: black;
+    height: 100%;
     color: white; 
 }
 
@@ -13,18 +14,22 @@ html {
 }
 
 h1 {
+    font-family: 'marske';
+    font-weight: bold;
     color: aqua;
     text-align: center; 
 }
 
 h2 {
+    font-family: 'marske';
+    font-weight: bold;
     color: fuchsia;
     text-align: center; 
-}
+} 
 
 .windowarea {
-    width: 500; 
-    height: 500; 
+    flex: 1 0 auto; 
+    overflow: scroll;
 }
 
 button {
@@ -55,10 +60,13 @@ button {
     color: red;
 }
 
-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
+
+.footer {
+    text-align: center;
+    flex-shrink: 0;
+} 
