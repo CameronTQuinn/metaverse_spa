@@ -27,8 +27,6 @@ function createWindow (typeVal) {
   while (document.getElementById(`window${i}`)) {
     i++
   }
-  zVal++
-  console.log('Total zVal set at open' + zVal)
   div.setAttribute('id', `window${i}`)
   div.innerHTML = `
   <style>
@@ -72,19 +70,15 @@ function createWindow (typeVal) {
     type = 'insta-chat'
     const instaChat = document.createElement(`${type}`)
     instaChat.setAttribute('id', `window${i}${type}`)
-    console.log(zVal)
-    instaChat.style.zIndex = `${zVal}`
+    appendAt.style.zIndex = `${zVal + 1}`
     instaChat.addEventListener('click', (event) => {
-      console.log('Focus instaChat')
-      console.log(zVal)
-      instaChat.style.zIndex = `${zVal}`
-      console.log('instaChat z-value' + instaChat.style.zIndex)
+      appendAt.style.zIndex = `${zVal + 1}`
       event.target.focus()
     })
-    instaChat.addEventListener('blur', () => {
-      console.log('Blur instaChat')
-      instaChat.style.zIndex = '0'
-      console.log('instaChat loses focus')
+    window.addEventListener('click', (event) => {
+      if (event.target !== instaChat) {
+        appendAt.style.zIndex = '0'
+      }
     })
     appendAt.appendChild(instaChat)
     instaChat.initializeChat()
@@ -92,19 +86,15 @@ function createWindow (typeVal) {
     type = 'memory-game'
     const memoryGame = document.createElement(`${type}`)
     memoryGame.setAttribute('id', `window${i}${type}`)
-    console.log(zVal)
-    memoryGame.style.zIndex = `${zVal}`
+    appendAt.style.zIndex = `${zVal + 1}`
     memoryGame.addEventListener('click', (event) => {
-      console.log('Focus memoryGame')
-      console.log(zVal)
-      zVal++
-      memoryGame.style.zIndex = `${zVal}`
-      console.log('memoryGame z-value' + memoryGame.style.zIndex)
+      appendAt.style.zIndex = `${zVal + 1}`
       event.target.focus()
     })
-    memoryGame.addEventListener('blur', () => {
-      memoryGame.style.zIndex = '0'
-      console.log('memoryGame loses focus')
+    window.addEventListener('click', (event) => {
+      if (event.target !== memoryGame) {
+        appendAt.style.zIndex = `${zVal}`
+      }
     })
     appendAt.appendChild(memoryGame)
     memoryGame.createBoard(2, 2)
@@ -112,20 +102,15 @@ function createWindow (typeVal) {
     type = 'click-game'
     const clickGame = document.createElement(`${type}`)
     clickGame.setAttribute('id', `window${i}${type}`)
-    console.log(zVal)
-    clickGame.style.zIndex = `${zVal}`
+    appendAt.style.zIndex = `${zVal + 1}`
     clickGame.addEventListener('click', (event) => {
-      console.log('Focus clickGame')
-      console.log(zVal)
-      zVal++
-      clickGame.style.zIndex = `${zVal}`
-      console.log('clickGame z-value' + clickGame.style.zIndex)
-      console.log(clickGame.style.zIndex)
+      appendAt.style.zIndex = `${zVal + 1}`
       event.target.focus()
     })
-    clickGame.addEventListener('blur', () => {
-      clickGame.style.zIndex = '0'
-      console.log('clickGame loses focus')
+    window.addEventListener('click', (event) => {
+      if (event.target !== clickGame) {
+        appendAt.style.zIndex = `${zVal}`
+      }
     })
     appendAt.appendChild(clickGame)
     clickGame.createGame()
