@@ -1,8 +1,10 @@
 import './clickGame.js'
 import './memory-game.js'
 import './instachat.js'
-
-let zVal = 0
+/**
+ * Main sets event listeners for the different possible applications and calls
+ * createWindow() with the corresponding value
+ */
 
 function main () {
   // Set up a menu on the bottom with links to launch apps
@@ -20,9 +22,18 @@ function main () {
     createWindow(3)
   })
 }
+/**
+ * Launches application, listens for events to close or drag the application
+ * as well as for keeping the element with focus on top
+ * @param {int} typeVal - which application we want to launch
+ */
 
 function createWindow (typeVal) {
+  // To keep track of which element to put in front
+  const zVal = 0
+  // Create a new element and use a template to fill in the details
   const div = document.createElement('div')
+  // Keep track of which element this will be
   let i = 0
   while (document.getElementById(`window${i}`)) {
     i++
@@ -52,11 +63,13 @@ function createWindow (typeVal) {
     </div>
   </div>
   `
+  // Event listener for dragging the element
   div.addEventListener('mousedown', function (event) {
     if (event.target === document.getElementById(`mydivheader${i}`)) {
       dragElement(document.getElementById(`mydiv${i}`), event)
     }
   })
+  // Append the div to the window
   const appendTo = document.getElementById('windowarea')
   appendTo.appendChild(div)
   // Event listener for close button for each new "mini-window"
@@ -64,33 +77,41 @@ function createWindow (typeVal) {
   closeButton.addEventListener('click', () => {
     div.remove()
   })
+  // Get the div
   const appendAt = document.getElementById(`mydiv${i}`)
   let type
   if (typeVal === 1) {
+    // If type is inta-chat, create a insta-chat element
     type = 'insta-chat'
     const instaChat = document.createElement(`${type}`)
     instaChat.setAttribute('id', `window${i}${type}`)
     appendAt.style.zIndex = `${zVal + 1}`
+    // Give focus on click and highest z-value
     instaChat.addEventListener('click', (event) => {
       appendAt.style.zIndex = `${zVal + 1}`
       event.target.focus()
     })
+    // If focus is no longer on insta-chat, it should not be the highest z-value
     window.addEventListener('click', (event) => {
       if (event.target !== instaChat) {
         appendAt.style.zIndex = '0'
       }
     })
+    // Append insta-chat element and initialize instance of the class
     appendAt.appendChild(instaChat)
     instaChat.initializeChat()
   } else if (typeVal === 2) {
+    // Create a memory-game element
     type = 'memory-game'
     const memoryGame = document.createElement(`${type}`)
     memoryGame.setAttribute('id', `window${i}${type}`)
     appendAt.style.zIndex = `${zVal + 1}`
+    // Give focus on click and highest z-value
     memoryGame.addEventListener('click', (event) => {
       appendAt.style.zIndex = `${zVal + 1}`
       event.target.focus()
     })
+    // Focus leaves memoryGame
     window.addEventListener('click', (event) => {
       if (event.target !== memoryGame) {
         appendAt.style.zIndex = `${zVal}`
@@ -99,14 +120,17 @@ function createWindow (typeVal) {
     appendAt.appendChild(memoryGame)
     memoryGame.createBoard(2, 2)
   } else if (typeVal === 3) {
+    // Create clickGame element
     type = 'click-game'
     const clickGame = document.createElement(`${type}`)
     clickGame.setAttribute('id', `window${i}${type}`)
     appendAt.style.zIndex = `${zVal + 1}`
+    // Give focus and highest z-value
     clickGame.addEventListener('click', (event) => {
       appendAt.style.zIndex = `${zVal + 1}`
       event.target.focus()
     })
+    // Focus leaves clickGame
     window.addEventListener('click', (event) => {
       if (event.target !== clickGame) {
         appendAt.style.zIndex = `${zVal}`
@@ -117,7 +141,12 @@ function createWindow (typeVal) {
   }
 }
 
-// Make the DIV element draggagle:
+/**
+ * Takes the mydiv element and the event and drags the element to where the user
+ * releases the mouse
+ * @param {*} element - sends in the mydiv corresponding to this event
+ * @param {*} event - sends in the event
+ */
 function dragElement (element, event) {
   var pos1 = 0; var pos2 = 0; var pos3 = 0; var pos4 = 0
   element.onmousedown = dragMouseDown(event)
@@ -128,7 +157,7 @@ function dragElement (element, event) {
     pos3 = event.clientX
     pos4 = event.clientY
     document.onmouseup = closeDragElement
-    // call a function whenever the cursor moves:
+    // Call a function whenever the cursor moves:
     document.onmousemove = elementDrag
   }
 

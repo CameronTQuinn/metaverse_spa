@@ -1,3 +1,4 @@
+// Template for insta-chat element
 const template = document.createElement('template')
 template.innerHTML = `
 <style>
@@ -61,6 +62,9 @@ template.innerHTML = `
 </div>
 `
 class InstaChat extends window.HTMLElement {
+  /**
+   * Constructs an instance of the insta-chat custom element
+   */
   constructor () {
     super()
     this.attachShadow({ mode: 'open' })
@@ -74,12 +78,19 @@ class InstaChat extends window.HTMLElement {
     this.socket = null
   }
 
+  /**
+   * Initializes the chat by prompting the user for a username and saves that to local
+   * storage, allowing the user to reset the username if desired.
+   * Calls sendMessage() method if the username is valid, allowing the
+   * user to send a message.
+   */
   initializeChat () {
     // Get username
     let username = ''
     const userNameLabel = document.createElement('label')
     userNameLabel.innerHTML = 'Enter a username...'
     const userNameInput = document.createElement('input')
+    // If a username is already in localStorage, make that the default username
     if (localStorage.getItem('username') !== null) {
       username = localStorage.getItem('username')
       userNameInput.value = username
@@ -134,7 +145,13 @@ class InstaChat extends window.HTMLElement {
     this.appendAt.appendChild(submitUsername)
   }
 
+  /**
+   * The sendMessage method allows the user to send a message to the chat
+   * @param {*} text - gets the text that they want to send
+   * @param {*} username -gets the user's username
+   */
   sendMessage (text, username) {
+    // Data to send
     const data = {
       type: 'message',
       data: text,
@@ -142,11 +159,15 @@ class InstaChat extends window.HTMLElement {
       channel: 'my, not so secret, channel',
       key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
     }
+    // Connect to chat and send data
     this.connectToChat().then(function (socket) {
       socket.send(JSON.stringify(data))
     })
   }
 
+  /**
+   * Connect to chat
+   */
   connectToChat () {
     return new Promise(function (resolve, reject) {
       if (this.socket && this.socket.readystae === 1) {
@@ -164,6 +185,10 @@ class InstaChat extends window.HTMLElement {
     }.bind(this))
   }
 
+  /**
+   * Prints the messages as they are received from the chat
+   * @param {*} message - message to print
+   */
   printMessage (message) {
     const template = this.parentDiv.querySelectorAll('template')[0]
     const messageDiv = document.importNode(template.content, true)
