@@ -266,7 +266,7 @@ class ClickGame extends window.HTMLElement {
         // Remove event listeners
         this.restartGame(false)
       } else {
-        console.log(time)
+        // Decrement and display time
         time--
         timeDisplay.innerHTML = `${time}`
       }
@@ -275,8 +275,8 @@ class ClickGame extends window.HTMLElement {
     const c1r1 = this.shadowRoot.getElementById('tile0')
     c1r1.addEventListener('click', function (event) {
       count = this.onClick(event, count, clickColor, 'left')
-      console.log(count)
       if (count === 3) {
+        // If the count is three, remove the timer, event listeners, messages, and restart game
         count = 0
         timeDisplay.remove()
         clearInterval(timer)
@@ -287,8 +287,8 @@ class ClickGame extends window.HTMLElement {
     const c2r1 = this.shadowRoot.getElementById('tile1')
     c2r1.addEventListener('click', function (event) {
       count = this.onClick(event, count, clickColor, 'right')
-      console.log(count)
       if (count === 3) {
+        // If the count is three, remove the timer, event listeners, messages, and restart game
         count = 0
         timeDisplay.remove()
         clearInterval(timer)
@@ -299,8 +299,8 @@ class ClickGame extends window.HTMLElement {
     const c3r1 = this.shadowRoot.getElementById('tile2')
     c3r1.addEventListener('click', function (event) {
       count = this.onClick(event, count, clickColor, 'center')
-      console.log(count)
       if (count === 3) {
+        // If the count is three, remove the timer, event listeners, messages, and restart game
         count = 0
         timeDisplay.remove()
         clearInterval(timer)
@@ -311,8 +311,8 @@ class ClickGame extends window.HTMLElement {
     const c1r2 = this.shadowRoot.getElementById('tile3')
     c1r2.addEventListener('click', function (event) {
       count = this.onClick(event, count, clickColor, 'left')
-      console.log(count)
       if (count === 3) {
+        // If the count is three, remove the timer, event listeners, messages, and restart game
         count = 0
         timeDisplay.remove()
         clearInterval(timer)
@@ -323,8 +323,8 @@ class ClickGame extends window.HTMLElement {
     const c2r2 = this.shadowRoot.getElementById('tile4')
     c2r2.addEventListener('click', function (event) {
       count = this.onClick(event, count, clickColor, 'right')
-      console.log(count)
       if (count === 3) {
+        // If the count is three, remove the timer, event listeners, messages, and restart game
         count = 0
         timeDisplay.remove()
         clearInterval(timer)
@@ -335,8 +335,8 @@ class ClickGame extends window.HTMLElement {
     const c3r2 = this.shadowRoot.getElementById('tile5')
     c3r2.addEventListener('click', function (event) {
       count = this.onClick(event, count, clickColor, 'center')
-      console.log(count)
       if (count === 3) {
+        // If the count is three, remove the timer, event listeners, messages, and restart game
         count = 0
         timeDisplay.remove()
         clearInterval(timer)
@@ -348,6 +348,7 @@ class ClickGame extends window.HTMLElement {
     c1r3.addEventListener('click', function (event) {
       count = this.onClick(event, count, clickColor, 'left')
       if (count === 3) {
+        // If the count is three, remove the timer, event listeners, messages, and restart game
         count = 0
         timeDisplay.remove()
         clearInterval(timer)
@@ -359,6 +360,7 @@ class ClickGame extends window.HTMLElement {
     c2r3.addEventListener('click', function (event) {
       count = this.onClick(event, count, clickColor, 'right')
       if (count === 3) {
+        // If the count is three, remove the timer, event listeners, messages, and restart game
         count = 0
         timeDisplay.remove()
         clearInterval(timer)
@@ -370,6 +372,7 @@ class ClickGame extends window.HTMLElement {
     c3r3.addEventListener('click', function (event) {
       count = this.onClick(event, count, clickColor, 'center')
       if (count === 3) {
+        // If the count is three, remove the timer, event listeners, messages, and restart game
         count = 0
         timeDisplay.remove()
         clearInterval(timer)
@@ -407,21 +410,37 @@ class ClickGame extends window.HTMLElement {
     return count
   }
 
+  /**
+   * Takes each of the element and calls removeAllEventListenersFromElement
+   * @param {*} c1r1 - First tile
+   * @param {*} c2r1 - Second tile
+   * @param {*} c3r1 - Third tile
+   * @param {*} c1r2 - Fourth tile
+   * @param {*} c2r2 - Fifth tile
+   * @param {*} c3r2 - Sixth tile
+   * @param {*} c1r3 - Seventh tile
+   * @param {*} c2r3 - Eight tile
+   * @param {*} c3r3 - Ninth tile
+   */
   cleanUp (c1r1, c2r1, c3r1, c1r2, c2r2, c3r2, c1r3, c2r3, c3r3) {
-    this.removeAllEventListenersFromElement(c1r1)
-    this.removeAllEventListenersFromElement(c2r1)
-    this.removeAllEventListenersFromElement(c3r1)
-    this.removeAllEventListenersFromElement(c1r2)
-    this.removeAllEventListenersFromElement(c2r2)
-    this.removeAllEventListenersFromElement(c3r2)
-    this.removeAllEventListenersFromElement(c1r3)
-    this.removeAllEventListenersFromElement(c2r3)
-    this.removeAllEventListenersFromElement(c3r3)
+    this.removeEventListeners(c1r1)
+    this.removeEventListeners(c2r1)
+    this.removeEventListeners(c3r1)
+    this.removeEventListeners(c1r2)
+    this.removeEventListeners(c2r2)
+    this.removeEventListeners(c3r2)
+    this.removeEventListeners(c1r3)
+    this.removeEventListeners(c2r3)
+    this.removeEventListeners(c3r3)
   }
 
-  removeAllEventListenersFromElement (element) {
+  /**
+   * Removes event listeners from a given element
+   * @param {*} element - Element to remove the listeners from
+   */
+  removeEventListeners (element) {
     const clone = element.cloneNode()
-    // move all child elements from the original to the clone
+    // Move all child elements from the original to the clone
     while (element.firstChild) {
       clone.appendChild(element.lastChild)
     }
@@ -439,7 +458,6 @@ class ClickGame extends window.HTMLElement {
     // If player won
     if (value === true) {
       while (appendAt.firstChild) {
-        console.log('Here 2')
         appendAt.removeChild(appendAt.firstChild)
       }
       const winLabel = document.createElement('h2')
@@ -449,56 +467,12 @@ class ClickGame extends window.HTMLElement {
       winButton.innerHTML = 'Play again?'
       appendAt.appendChild(winLabel).appendChild(winButton)
       winButton.addEventListener('click', (event) => {
-        /* Get rid of the time
-        const time = this.shadowRoot.getElementById('time')
-        while (time.firstChild) {
-          time.removeChild(time.firstChild)
-        }
-        */
         // Get rid of the won messaging
-        console.log('Here 1')
         while (appendAt.firstChild) {
-          console.log('Here 2')
           appendAt.removeChild(appendAt.firstChild)
         }
         this.createGame()
       })
-      /* Display leaderboard
-      const itemsInStorage1 = Object.keys(sessionStorage)
-      console.log(itemsInStorage1)
-      let val = 0
-      for (let i = 0; i < itemsInStorage1.length; i++) {
-        // Get each player and time from storage
-        if (itemsInStorage1[i] === val) {
-          val++
-        } else {
-          break
-        }
-      }
-      sessionStorage.setItem(`${val}`, `${20 - time}`)
-      const itemsInStorage = Object.keys(sessionStorage)
-      console.log(itemsInStorage)
-      const times = []
-      for (let i = 0; i < itemsInStorage.length; i++) {
-        // Get each time from storage
-        const itemFromStorage = sessionStorage.getItem(itemsInStorage[i])
-        const obj = { ID: itemsInStorage[i], time: itemFromStorage }
-        times.push(obj)
-      }
-      // Sort players according to time
-      const orderedListOfTimes = times.sort((a, b) => { return a.time - b.time })
-      // Create leaderboard
-      const leaderBoardElement = document.createElement('h2')
-      leaderBoardElement.innerHTML = 'Leaderboard'
-      leaderBoardElement.setAttribute('style', 'color:blue')
-      appendAt.appendChild(leaderBoardElement)
-      for (let i = 0; i < orderedListOfTimes.length; i++) {
-        const displayPlayer = document.createElement('h3')
-        displayPlayer.innerHTML = `Times: ${orderedListOfTimes[i].time}`
-        displayPlayer.setAttribute('style', 'color:green')
-        appendAt.appendChild(displayPlayer)
-      }
-      */
     } else if (value === false) {
     // Display that they have failed
       const failMessage = document.createElement('h2')
@@ -507,7 +481,9 @@ class ClickGame extends window.HTMLElement {
       const failButton = document.createElement('button')
       failButton.innerHTML = 'Play again?'
       failButton.addEventListener('click', (event) => {
+        // If they have failed, allow them to restart game
         while (appendAt.firstChild) {
+          // Remove messages
           appendAt.removeChild(appendAt.firstChild)
         }
         this.createGame()
