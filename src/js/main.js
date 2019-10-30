@@ -29,6 +29,15 @@ function main () {
  */
 
 function createWindow (typeVal) {
+  // Determine icon
+  let icon
+  if (typeVal === 1) {
+    icon = 'fas fa-comment'
+  } else if (typeVal === 2) {
+    icon = 'fas fa-brain'
+  } else if (typeVal === 3) {
+    icon = 'fas fa-mouse-pointer'
+  }
   // To keep track of which element to put in front
   const zVal = 0
   // Create a new element and use a template to fill in the details
@@ -56,10 +65,24 @@ function createWindow (typeVal) {
     background-color: #2196F3;
     color: #fff;
   }
+  
+  .icon {
+    margin: 0px;
+    position: absolute;
+    top: 0px; 
+    left: 0px;
+    height: auto;
+    width: auto; 
+  }
+
+  .icon:hover {
+    background-color: white; 
+    color: red;
+  }
   </style>
   <div id="mydiv${i}">
     <div id="mydivheader${i}">
-      <button type="button" class="closebutton" id="closebutton${i}">X</button>
+      <button class="icon" id="icon${i}"><i class="${icon}" style="font-size:15px"></i></button>
     </div>
   </div>
   `
@@ -73,7 +96,7 @@ function createWindow (typeVal) {
   const appendTo = document.getElementById('windowarea')
   appendTo.appendChild(div)
   // Event listener for close button for each new "mini-window"
-  const closeButton = document.getElementById(`closebutton${i}`)
+  const closeButton = document.getElementById(`icon${i}`)
   closeButton.addEventListener('click', () => {
     div.remove()
   })
@@ -89,7 +112,6 @@ function createWindow (typeVal) {
     console.log('Created instaChat with focus. zValue: ' + div.style.zIndex)
     // Give focus on click and highest z-value
     instaChat.addEventListener('click', (event) => {
-      event.preventDefault()
       div.style.zIndex = `${zVal + 1}`
       div.focus()
       console.log('Clicked on instaChat gave focus. zValue: ' + div.style.zIndex)
@@ -138,7 +160,6 @@ function createWindow (typeVal) {
     console.log('Created clickGame with focus. zValue: ' + div.style.zIndex)
     // Give focus and highest z-value
     clickGame.addEventListener('click', (event) => {
-      event.preventDefault()
       div.style.zIndex = `${zVal + 1}`
       div.focus()
       console.log('Clicked on clickGame gave focus. zValue: ' + div.style.zIndex)

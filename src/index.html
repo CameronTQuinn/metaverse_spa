@@ -5,9 +5,11 @@
         <title></title>
         <meta name="description" content="">
         <script type="module" src="js/app.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="css/style.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
         <header>
@@ -17,9 +19,15 @@
         </div>
         <footer class="footer">
             <div class="menu">
-                <button id="instachat">InstaChat: <i>The Future of Communications</i></button>
-                <button id="memorygame">MemoryGame: <i>Empirically Validated Memory Test</i></button>
-                <button id="clickgame">ClickGame: <i>Response Time Analyzer</i></button>
+                <span>InstaChat: <i>The Future of Communications</i>
+                    <button id="instachat"><i class="fas fa-comment" style="font-size:15px"></i></button>
+                </span>
+                <span>MemoryGame: <i>Empirically Validated Memory Test</i>
+                    <button id="memorygame"><i class="fas fa-brain" style="font-size:15px"></i></button>
+                </span>
+                <span>ClickGame: <i>Response Time Analyzer</i>
+                    <button id="clickgame"><i class="fas fa-mouse-pointer" style="font-size:15px"></i></button>
+                </span>
             </div>
         </footer>
         <script nomodule src="build.js"></script>

@@ -35,6 +35,17 @@ div {
     position: relative;
 }
 
+span {
+    display: inline-block;
+    margin: 6px; 
+    padding-left: 10px;
+    background-color: blueviolet;
+    color: dodgerblue;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 16px; 
+}
+
 button {
     margin: 10px; 
     background-color: blueviolet;
@@ -45,23 +56,6 @@ button {
     font-size: 16px; 
 }
 
-.closebutton {
-    margin: 0px;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    padding: 0;
-    font-size: 1;
-    height: auto;
-    width: auto; 
-    background-color: red;
-    color: white; 
-}
-
-.closebutton:hover {
-    background-color: white; 
-    color: red;
-}
 
 body {
     font-family: 'marske';
