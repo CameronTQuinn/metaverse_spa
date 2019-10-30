@@ -270,7 +270,7 @@ class ClickGame extends window.HTMLElement {
         time--
         timeDisplay.innerHTML = `${time}`
       }
-    }, 1000)
+    }.bind(this), 1000)
     // For each tile, watch for a click and call onClick if clicked
     const c1r1 = this.shadowRoot.getElementById('tile0')
     c1r1.addEventListener('click', function (event) {
