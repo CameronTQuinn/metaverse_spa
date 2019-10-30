@@ -48,6 +48,8 @@ button {
 }
 </style>
 <div class="memory-game" id ='memory-game'>
+    <h2> MemoryGame </h2>
+    <br>
     <div class="grid-container" id='grid-container'></div>
 </div>
 `

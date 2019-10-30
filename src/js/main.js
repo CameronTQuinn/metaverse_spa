@@ -1,4 +1,4 @@
-import './clickGame.js'
+import './click-game.js'
 import './memory-game.js'
 import './instachat.js'
 /**
