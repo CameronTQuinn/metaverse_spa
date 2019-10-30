@@ -400,13 +400,6 @@ class ClickGame extends window.HTMLElement {
       tar.setAttribute('class', `column-${pos} border grey`)
       count++
     }
-    /* If the user has selected all three tiles of the correct color
-    if (count === 3) {
-      clearInterval(timer)
-      // Restart the game
-      this.restartGame(true, time)
-    }
-    */
     return count
   }
 
