@@ -7,7 +7,6 @@ html {
     background-color: black;
     height: 100%;
     color: white; 
-    overflow: scroll;
 }
 
 .menu {
@@ -65,7 +64,6 @@ button {
 }
 
 body {
-    overflow: scroll;
     font-family: 'marske';
     height: 100%;
     display: flex;

@@ -92,6 +92,7 @@ function createWindow (typeVal) {
       div.style.zIndex = `${zVal + 1}`
       div.focus()
       console.log('Clicked on instaChat gave focus. zValue: ' + div.style.zIndex)
+      document.activeElement()
     })
     // If focus is no longer on insta-chat, it should not be the highest z-value
     window.addEventListener('click', (event) => {
@@ -113,7 +114,7 @@ function createWindow (typeVal) {
     // Give focus on click and highest z-value
     memoryGame.addEventListener('click', (event) => {
       div.style.zIndex = `${zVal + 1}`
-      div.focus()
+      event.target.focus()
       console.log('Clicked on memoryGame gave focus. zValue: ' + div.style.zIndex)
     })
     // Focus leaves memoryGame

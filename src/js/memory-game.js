@@ -46,6 +46,9 @@ button {
     text-align: center;
     font-family: 'marske';
 }
+.removed {
+  visibility: hidden;
+}
 </style>
 <div class="memory-game" id ='memory-game'>
     <h2> MemoryGame </h2>
@@ -64,9 +67,6 @@ class MemoryGame extends window.HTMLElement {
     this.attachShadow({ mode: 'open' })
     this.shadowRoot.appendChild(template.content.cloneNode(true))
     this.parentDiv = this.shadowRoot.querySelector('#memory-game')
-    this.parentDiv.addEventListener('click', (event) => {
-      event.target.focus()
-    })
     this.grid = this.shadowRoot.querySelector('#grid-container')
     this.rows = rows
     this.cols = cols
@@ -178,23 +178,26 @@ class MemoryGame extends window.HTMLElement {
           first = img
           const val = first.getAttribute('val')
           first.setAttribute('src', val)
-          return first
-        } else if (clickNum === 2 && (first.getAttribute('val') === event.target.getAttribute('val') && (first.id !== event.target.id))) {
-          // Remove those tiles if they match
-          first.style.visibility = 'hidden'
-          event.target.style.visibility = 'hidden'
-          numHidden += 2
-          // If user is done, call restartGame
-          if (numHidden === (this.rows * this.cols)) {
-            this.restartGame()
-          }
-          clickNum = 0
-        } else if (clickNum === 2 && (first.getAttribute('val') !== event.target.getAttribute('val'))) {
-          // Display second tile
+          // return first
+        } else if (clickNum === 2) {
           second = img
-          const val = second.getAttribute('val')
-          second.setAttribute('src', val)
-          return second
+          // If image is match
+          if ((first.getAttribute('val') === second.getAttribute('val') && (first.id !== second.id))) {
+            // Remove those tiles if they match
+            first.parentNode.classList.add('removed')
+            second.parentNode.classList.add('removed')
+            numHidden += 2
+            // If user is done, call restartGame
+            if (numHidden === (this.rows * this.cols)) {
+              this.restartGame()
+            }
+            clickNum = 0
+          } else if (first.getAttribute('val') !== second.getAttribute('val')) {
+            // Otherwise if image is not a match
+            const val = second.getAttribute('val')
+            second.setAttribute('src', val)
+            // return second
+          }
         } else if (clickNum === 3) {
           // Hide the tiles since user didn't find a match
           first.setAttribute('src', 'image/0.png')
