@@ -109,19 +109,15 @@ function createWindow (typeVal) {
     const instaChat = document.createElement(`${type}`)
     instaChat.setAttribute('id', `window${i}${type}`)
     div.style.zIndex = `${zVal + 1}`
-    console.log('Created instaChat with focus. zValue: ' + div.style.zIndex)
     // Give focus on click and highest z-value
     instaChat.addEventListener('click', (event) => {
       div.style.zIndex = `${zVal + 1}`
       div.focus()
-      console.log('Clicked on instaChat gave focus. zValue: ' + div.style.zIndex)
-      console.log(document.activeElement)
     })
     // If focus is no longer on insta-chat, it should not be the highest z-value
     window.addEventListener('click', (event) => {
       if (event.target !== instaChat) {
         div.style.zIndex = '0'
-        console.log('Out of instaChat. zValue of parent div: ' + div.style.zIndex)
       }
     })
     // Append insta-chat element and initialize instance of the class
@@ -133,20 +129,16 @@ function createWindow (typeVal) {
     const memoryGame = document.createElement(`${type}`)
     memoryGame.setAttribute('id', `window${i}${type}`)
     div.style.zIndex = `${zVal + 1}`
-    console.log('Created memoryGame with focus. zValue: ' + div.style.zIndex)
     // Give focus on click and highest z-value
     memoryGame.addEventListener('click', (event) => {
       event.preventDefault()
       div.style.zIndex = `${zVal + 1}`
       div.focus()
-      console.log('Clicked on memoryGame gave focus. zValue: ' + div.style.zIndex)
-      console.log(document.activeElement)
     })
     // Focus leaves memoryGame
     window.addEventListener('click', (event) => {
       if (event.target !== memoryGame) {
         div.style.zIndex = '0'
-        console.log('Out of memoryGame. zValue of parent div: ' + div.style.zIndex)
       }
     })
     appendAt.appendChild(memoryGame)
@@ -157,19 +149,16 @@ function createWindow (typeVal) {
     const clickGame = document.createElement(`${type}`)
     clickGame.setAttribute('id', `window${i}${type}`)
     appendAt.style.zIndex = `${zVal + 1}`
-    console.log('Created clickGame with focus. zValue: ' + div.style.zIndex)
+
     // Give focus and highest z-value
     clickGame.addEventListener('click', (event) => {
       div.style.zIndex = `${zVal + 1}`
       div.focus()
-      console.log('Clicked on clickGame gave focus. zValue: ' + div.style.zIndex)
-      console.log(document.activeElement)
     })
     // Focus leaves clickGame
     window.addEventListener('click', (event) => {
       if (event.target !== clickGame) {
         div.style.zIndex = '0'
-        console.log('Out of clickGame. zValue of parent div: ' + div.style.zIndex)
       }
     })
     appendAt.appendChild(clickGame)

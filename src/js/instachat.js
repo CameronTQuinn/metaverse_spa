@@ -194,9 +194,7 @@ class InstaChat extends window.HTMLElement {
    * @param {*} message - message to print
    */
   printMessage (message) {
-    console.log(message)
     const template = this.parentDiv.querySelectorAll('template')[0]
-    console.log(template)
     const messageDiv = document.importNode(template.content, true)
     const text = messageDiv.getElementById('text')
     text.textContent = message.data
