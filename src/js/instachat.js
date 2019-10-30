@@ -115,6 +115,7 @@ class InstaChat extends window.HTMLElement {
           const modify = this.shadowRoot.getElementById('messagearea')
           const value = modify.value
           this.connectToChat().then(function (socket) {
+            console.log('In here')
             this.sendMessage(value, username)
           }.bind(this))
           // Empty the text area
@@ -170,7 +171,7 @@ class InstaChat extends window.HTMLElement {
    */
   connectToChat () {
     return new Promise(function (resolve, reject) {
-      if (this.socket && this.socket.readystae === 1) {
+      if (this.socket && this.socket.readyState === 1) {
         resolve(this.socket)
         return
       }
@@ -178,9 +179,12 @@ class InstaChat extends window.HTMLElement {
       this.socket.addEventListener('open', () => {
         resolve(this.socket)
       })
-      this.socket.addEventListener('message', (event) => {
+      this.socket.addEventListener('message', function (event) {
         const message = JSON.parse(event.data)
         this.printMessage(message)
+      }.bind(this))
+      this.socket.addEventListener('error', function (event) {
+        reject(new Error('The websocket you entered could not be completed as dialed'))
       })
     }.bind(this))
   }
@@ -190,12 +194,14 @@ class InstaChat extends window.HTMLElement {
    * @param {*} message - message to print
    */
   printMessage (message) {
+    console.log(message)
     const template = this.parentDiv.querySelectorAll('template')[0]
+    console.log(template)
     const messageDiv = document.importNode(template.content, true)
     const text = messageDiv.getElementById('text')
     text.textContent = message.data
     const author = messageDiv.getElementById('author')
-    author.textContent = message.data
+    author.textContent = message.username
     this.shadowRoot.getElementById('messages').appendChild(messageDiv)
   }
 }
