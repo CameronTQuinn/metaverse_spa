@@ -92,6 +92,17 @@ function createWindow (typeVal) {
       dragElement(document.getElementById(`mydiv${i}`), event)
     }
   })
+  // See if window should lose focus
+  window.addEventListener('click', (event) => {
+    if (!div.contains(event.target)) {
+      div.style.zIndex = '0'
+      div.blur()
+      event.target.focus()
+    } else {
+      div.focus()
+      div.style.zIndex = '1'
+    }
+  })
   // Append the div to the window
   const appendTo = document.getElementById('windowarea')
   appendTo.appendChild(div)
@@ -99,6 +110,7 @@ function createWindow (typeVal) {
   const closeButton = document.getElementById(`icon${i}`)
   closeButton.addEventListener('click', () => {
     div.remove()
+    div.blur()
   })
   // Get the div
   const appendAt = document.getElementById(`mydiv${i}`)
@@ -109,18 +121,6 @@ function createWindow (typeVal) {
     const instaChat = document.createElement(`${type}`)
     instaChat.setAttribute('id', `window${i}${type}`)
     div.style.zIndex = `${zVal + 1}`
-    // Give focus on click and highest z-value
-    instaChat.addEventListener('click', (event) => {
-      div.style.zIndex = `${zVal + 1}`
-      div.focus()
-    })
-    // If focus is no longer on insta-chat, it should not be the highest z-value
-    window.addEventListener('click', (event) => {
-      if (event.target !== instaChat) {
-        div.style.zIndex = '0'
-      }
-    })
-    // Append insta-chat element and initialize instance of the class
     appendAt.appendChild(instaChat)
     instaChat.initializeChat()
   } else if (typeVal === 2) {
@@ -129,18 +129,6 @@ function createWindow (typeVal) {
     const memoryGame = document.createElement(`${type}`)
     memoryGame.setAttribute('id', `window${i}${type}`)
     div.style.zIndex = `${zVal + 1}`
-    // Give focus on click and highest z-value
-    memoryGame.addEventListener('click', (event) => {
-      event.preventDefault()
-      div.style.zIndex = `${zVal + 1}`
-      div.focus()
-    })
-    // Focus leaves memoryGame
-    window.addEventListener('click', (event) => {
-      if (event.target !== memoryGame) {
-        div.style.zIndex = '0'
-      }
-    })
     appendAt.appendChild(memoryGame)
     memoryGame.createBoard(2, 2)
   } else if (typeVal === 3) {
@@ -149,18 +137,6 @@ function createWindow (typeVal) {
     const clickGame = document.createElement(`${type}`)
     clickGame.setAttribute('id', `window${i}${type}`)
     appendAt.style.zIndex = `${zVal + 1}`
-
-    // Give focus and highest z-value
-    clickGame.addEventListener('click', (event) => {
-      div.style.zIndex = `${zVal + 1}`
-      div.focus()
-    })
-    // Focus leaves clickGame
-    window.addEventListener('click', (event) => {
-      if (event.target !== clickGame) {
-        div.style.zIndex = '0'
-      }
-    })
     appendAt.appendChild(clickGame)
     clickGame.createGame()
   }
