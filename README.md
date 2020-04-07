@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-# cq222am-examination-3
-# cq222am-examination-3
-=======
-## Examination assignment 3
-This is the assignment repo for the second assignment in the course. 
+MetaVerse SPA 
 
 ## Installation
 Make sure node.js and npm is installed on your system.
